@@ -1,0 +1,6 @@
+framework module TagSDK {
+  umbrella header "TagSDK.h"
+
+  export *
+  module * { export * }
+}
