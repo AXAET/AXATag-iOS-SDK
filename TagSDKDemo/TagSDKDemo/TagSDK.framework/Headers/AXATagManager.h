@@ -9,11 +9,18 @@
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 
-typedef enum {
-    SentMessageTypeNone,
+typedef enum : NSUInteger {
+    // find device or mute device
     SentMessageTypeSoundOrMute,
-    SentMessageTypeOff
+    // turn off device
+    SentMessageTypeTurnOff
 } SentMessageType;
+
+//typedef enum : NSUInteger {
+//    ReceiveMassageTypeSinglePress,
+//    ReceiveMassageTypeDoublePress,
+//    ReceiveMassageTypeLongPress,
+//} ReceiveMassageType;
 
 @interface AXATagManager : NSObject
 @property (nonatomic, strong) CBPeripheral *activePeripheral;
@@ -24,39 +31,26 @@ typedef enum {
 
 +(AXATagManager *) sharedManager;
 
- 
-/*!
- *   scan ble with service
- */
+// scan devices
 - (void)startFindBleDevices;
-
-// stop scan devices
+// stop devices
 - (void)stopFindBleDevices;
+
+// connect device
 - (void)connectBleDevice:(CBPeripheral *)peripheral;
+// disconnect device
 - (void)disconnectBleDevice:(CBPeripheral *)peripheral;
 
-/*!
- *  @method retrievePeripheralsWithIdentifiers:
- *
- *  @param uuidString	NSString object.
- *
- *  @discussion     Attempts to retrieve the CBPeripheral object with the corresponding uuidString.
- *
- *	@return		CBPeripheral object.
- *
- */
-- (CBPeripheral *)retrievePeripheralWithUUIDString:(NSString *)uuidString NS_AVAILABLE(NA, 7_0);
+// get peripherals by identifiers
+- (NSArray<CBPeripheral *> *)retrievePeripheralsWithIdentifiers:(NSArray<NSUUID *> *)identifiers;
 
-/*!
- *  @method retrieveConnectedPeripherals
+// get connected peripherals by identifiers
+- (NSArray<CBPeripheral *> *)retrieveConnectedPeripherals;
 
- *	@return		A list of CBPeripheral objects.
- *
- */
-- (NSArray *)retrieveConnectedPeripherals NS_AVAILABLE(NA, 7_0);
-
-//send control conmmand
+// find me or mute or turn off device
 - (void)sendControlCommand:(SentMessageType)type toPeripheral:(CBPeripheral *)peripheral;
 
+//Each method is called once, it sends a notification about Rssi, the interval of not less than 1.5s
+- (void)readRssiForPeripheral:(CBPeripheral *)peripheral;
 
 @end

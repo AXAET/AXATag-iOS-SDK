@@ -24,15 +24,19 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)pressSoundBtn:(id)sender {
-    CBPeripheral* peripheral = [TagSelf retrievePeripheralWithUUIDString:self.tag.uuidString];
+//    CBPeripheral* peripheral = [TagSelf retrievePeripheralWithUUIDString:self.tag.uuidString];
+    NSArray<CBPeripheral *> * array = [TagSelf retrievePeripheralsWithIdentifiers:@[[CBUUID UUIDWithString:self.tag.uuidString]]];
+    CBPeripheral *peripheral = array.lastObject;
     [TagSelf sendControlCommand:SentMessageTypeSoundOrMute toPeripheral:peripheral];
 }
 - (IBAction)pressMuteBtn:(id)sender {
 
 }
 - (IBAction)pressOffBtn:(id)sender {
-    CBPeripheral* peripheral = [TagSelf retrievePeripheralWithUUIDString:self.tag.uuidString];
-    [TagSelf sendControlCommand:SentMessageTypeOff toPeripheral:peripheral];
+//    CBPeripheral* peripheral = [TagSelf retrievePeripheralWithUUIDString:self.tag.uuidString];
+    NSArray<CBPeripheral *> * array = [TagSelf retrievePeripheralsWithIdentifiers:@[[CBUUID UUIDWithString:self.tag.uuidString]]];
+    CBPeripheral *peripheral = array.lastObject;
+    [TagSelf sendControlCommand:SentMessageTypeTurnOff toPeripheral:peripheral];
 }
 - (IBAction)pressBatteryLevel:(id)sender {
 

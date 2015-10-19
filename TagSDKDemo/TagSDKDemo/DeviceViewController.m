@@ -33,6 +33,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(temperatureNotify:) name:bKey_Device_Update_Temperature object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(humidityNotify:) name:bKey_Device_Update_Humidity object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rssiNotify:) name:bKey_Device_Update_RSSI object:nil];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(readAllRssis) userInfo:nil repeats:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -204,6 +206,10 @@
         }
     }
     return nil;
+}
+
+- (void)readAllRssis {
+    [TagSelf readRssiForPeripheral:TagSelf.activePeripheral];
 }
 
 @end

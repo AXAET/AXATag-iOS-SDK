@@ -14,8 +14,13 @@
 
 // we use notification to handel ble delegate
 
+// phone bluetooth on or off
+#define bKey_Device_Ble_On                      @"bKey_Device_Ble_On"
+#define bKey_Device_Ble_Off                     @"bKey_Device_Ble_Off"
+
 //when discover new ble device, the notification of this name will send
-// notify object CBPeripheral and NSDictionary(rssi)
+// notify object CBPeripheral
+// notify username NSDictionary(@"rssi":rssi, @"advertisementData":advertisementData)
 #define bKey_Device_Discover                    @"bKey_Device_Discover"
 
 // when disconnected
@@ -40,11 +45,11 @@
 
 // press the ble device button once
 // notify object CBPeripheral
-#define bKey_Device_Single_Press                @"bKey_Device_Single_Press"
+#define bKey_Device_Single_Press               @"bKey_Device_Single_Press"
 
 // double press(press twice quickly)
 // notify object CBPeripheral
-#define bKey_Device_Double_Press                @"bKey_Device_Double_Press"
+#define bKey_Device_Double_Press               @"bKey_Device_Double_Press"
 //
 // notify object CBPeripheral
 #define bKey_Device_Long_Press                  @"bKey_Device_Long_Press"
@@ -63,6 +68,7 @@
 
 
 #define kRSSI   @"RSSI"
+#define kAdvertisementData      @"advertisementData"
 #define TagSelf [AXATagManager sharedManager]
 
 

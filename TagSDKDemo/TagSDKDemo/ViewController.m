@@ -22,16 +22,18 @@
     [super viewDidLoad];
     self.navigationItem.title = @"home";
     
-    self.leftBarItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStylePlain target:self action:@selector(pressLeftBarItem)];
+    self.leftBarItem = [[UIBarButtonItem alloc] initWithTitle:@"update" style:UIBarButtonItemStylePlain target:self action:@selector(pressLeftBarItem)];
     self.navigationItem.leftBarButtonItem = self.leftBarItem;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bleOn) name:bKey_Device_Ble_On object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bleOff) name:bKey_Device_Ble_Off object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(discoverNotify:) name:bKey_Device_Discover object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectNotify:) name:bKey_Device_Connect object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnectNotify:) name:bKey_Device_Disconnect object:nil];
 
     self.discoveredArray = [[NSMutableArray alloc] init];
     self.rssiArray = [[NSMutableArray alloc] init];
-    [TagSelf startFindBleDevices];
+    [AXATagManager sharedManager];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,7 +54,6 @@
     [self.discoveredArray removeObjectsInArray:array1];
     [self.rssiArray removeObjectsInArray:array2];
 
-    
     [self.tableView reloadData];
 }
 
@@ -109,6 +110,14 @@
 
 #pragma mark - discover notify
 
+- (void)bleOn {
+    [TagSelf startFindBleDevices];
+}
+
+- (void)bleOff {
+    
+}
+
 - (void)discoverNotify:(NSNotification *)notification {
     
     CBPeripheral *peripheral = notification.object;
@@ -145,8 +154,6 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:indexRow inSection:0];
     
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    
-//    [TagSelf connectBleDevice:peripheral];
 }
 
 @end

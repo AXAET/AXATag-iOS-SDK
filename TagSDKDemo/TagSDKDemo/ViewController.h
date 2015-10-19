@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <TagSDK/TagSDK.h>
-//#import "AXATagDefine.h"
-//#import "AXATagManager.h"
 
 @interface ViewController : UITableViewController
 
